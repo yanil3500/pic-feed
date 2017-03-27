@@ -12,6 +12,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     let imagePicker = UIImagePickerController()
 
+    @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,5 +39,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //If user is presented with a cancel button, dismiss the image-picker
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
+    }
+    @IBAction func imageTapped(_ sender: Any) {
     }
 }

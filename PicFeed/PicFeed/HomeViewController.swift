@@ -15,9 +15,12 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.imageView.image = #imageLiteral(resourceName: "Twitter_Logo_White_On_Image")
         // Do any additional setup after loading the view.
     }
+    
+    
     
     
     
@@ -50,6 +53,8 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         print("User has tapped image.")
         self.presentActionSheet()
     }
+    
+
     
     //the following function asks the user for permissions in regards to camera use and 
     

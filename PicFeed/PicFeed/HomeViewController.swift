@@ -32,9 +32,15 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         
         //Source type specifies the type of picker interface to be displayed by the controller
-        self.imagePicker.sourceType = sourceType
         
-        self.present(self.imagePicker, animated: true, completion: nil)
+        if self.doesHaveCamera(){
+            self.imagePicker.sourceType = sourceType
+            self.present(self.imagePicker, animated: true, completion: nil)
+            print("The device totally has a camera!")
+        } else {
+            print("Device does not have camera.")
+        }
+        
         
     }
     
@@ -54,6 +60,10 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.presentActionSheet()
     }
     
+    func doesHaveCamera() -> Bool {
+        return UIImagePickerController.isSourceTypeAvailable(.camera)
+    }
+    
 
     
     //the following function asks the user for permissions in regards to camera use and 
@@ -63,11 +73,12 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
          An action sheet is a specific style of alert that appears in response to a control or action, and presents a set of two or more choices related to the current context. Use an action sheet to let people initiate tasks, or to request confirmation before performing a potentially destructive operation. */
         let actionSheetController = UIAlertController(title: "Source", message: "Please select source type", preferredStyle: .actionSheet)
         
-        
-        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
+        if doesHaveCamera() {
+          let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
             self.presentImagePickerWith(sourceType: .camera)
+          }
+            actionSheetController.addAction(cameraAction)
         }
-        
         let photoAction = UIAlertAction(title: "Photo Library", style: .default) { (action) in
             self.presentImagePickerWith(sourceType: .photoLibrary)
         }
@@ -75,7 +86,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
         
         //Attaches action object to the action sheet
-        actionSheetController.addAction(cameraAction)
+        
         actionSheetController.addAction(photoAction)
         actionSheetController.addAction(cancelAction)
         

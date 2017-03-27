@@ -20,6 +20,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     
+    
     //Helper method that presents our image picker
     func presentImagePickerWith(sourceType: UIImagePickerControllerSourceType){
         
@@ -30,7 +31,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         //Source type specifies the type of picker interface to be displayed by the controller
         self.imagePicker.sourceType = sourceType
         
-        //
         self.present(self.imagePicker, animated: true, completion: nil)
         
     }

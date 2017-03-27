@@ -30,6 +30,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         //The class needs to conform to UIImagePickerControllerDelegate
         self.imagePicker.delegate = self
         
+        self.imagePicker.allowsEditing = true
         
         //Source type specifies the type of picker interface to be displayed by the controller
         
@@ -56,9 +57,14 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         print("Info: \(info["UIImagePickerControllerOriginalImage"])")
         self.imageView.image = info["UIImagePickerControllerOriginalImage"] as? UIImage
-        
+        if let capturedImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            //Saves captured image to photoAlbum
+//            UIImageWriteToSavedPhotosAlbum(capturedImage, self, nil, <#T##contextInfo: UnsafeMutableRawPointer?##UnsafeMutableRawPointer?#>)
+        }
+
         //Dismisses picker controller
         imagePickerControllerDidCancel(picker)
+        
     }
     @IBAction func imageTapped(_ sender: Any) {
         print("User has tapped image.")

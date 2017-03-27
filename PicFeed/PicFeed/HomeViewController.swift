@@ -40,6 +40,41 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    //tells the delegate that the user picked a still image or movie (see info dictionary)
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        print("Info: \(info)")
+        
+    }
     @IBAction func imageTapped(_ sender: Any) {
+        print("User has tapped image.")
+        self.presentActionSheet()
+    }
+    
+    //the following function asks the user for permissions in regards to camera use and 
+    
+    func presentActionSheet(){
+        /*
+         An action sheet is a specific style of alert that appears in response to a control or action, and presents a set of two or more choices related to the current context. Use an action sheet to let people initiate tasks, or to request confirmation before performing a potentially destructive operation. */
+        let actionSheetController = UIAlertController(title: "Source", message: "Please select source type", preferredStyle: .actionSheet)
+        
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
+            self.presentImagePickerWith(sourceType: .camera)
+        }
+        
+        let photoAction = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            self.presentImagePickerWith(sourceType: .photoLibrary)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+        
+        //Attaches action object to the action sheet
+        actionSheetController.addAction(cameraAction)
+        actionSheetController.addAction(photoAction)
+        actionSheetController.addAction(cancelAction)
+        
+        
+        self.present(actionSheetController, animated: true, completion: nil)
     }
 }

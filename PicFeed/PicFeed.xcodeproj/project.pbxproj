@@ -7,21 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CD1FC67B1E89803D00CABE1C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1FC67A1E89803D00CABE1C /* CloudKit.framework */; };
 		CD2B1F941E897EF0006B835A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2B1F931E897EF0006B835A /* AppDelegate.swift */; };
-		CD2B1F961E897EF0006B835A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2B1F951E897EF0006B835A /* ViewController.swift */; };
 		CD2B1F991E897EF0006B835A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD2B1F971E897EF0006B835A /* Main.storyboard */; };
 		CD2B1F9B1E897EF0006B835A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD2B1F9A1E897EF0006B835A /* Assets.xcassets */; };
 		CD2B1F9E1E897EF0006B835A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD2B1F9C1E897EF0006B835A /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CD1FC67A1E89803D00CABE1C /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		CD2B1F901E897EF0006B835A /* PicFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PicFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD2B1F931E897EF0006B835A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CD2B1F951E897EF0006B835A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CD2B1F981E897EF0006B835A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CD2B1F9A1E897EF0006B835A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD2B1F9D1E897EF0006B835A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CD2B1F9F1E897EF0006B835A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD2B1FA51E897F99006B835A /* PicFeed.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PicFeed.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +30,61 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD1FC67B1E89803D00CABE1C /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CD1FC6791E89803D00CABE1C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CD1FC67A1E89803D00CABE1C /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CD1FC67C1E89820900CABE1C /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				CD2B1FA51E897F99006B835A /* PicFeed.entitlements */,
+				CD2B1F9C1E897EF0006B835A /* LaunchScreen.storyboard */,
+				CD2B1F9F1E897EF0006B835A /* Info.plist */,
+			);
+			name = Supporting;
+			sourceTree = "<group>";
+		};
+		CD1FC67D1E89823400CABE1C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CD2B1F931E897EF0006B835A /* AppDelegate.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		CD1FC67E1E89825500CABE1C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CD2B1F971E897EF0006B835A /* Main.storyboard */,
+				CD2B1F9A1E897EF0006B835A /* Assets.xcassets */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		CD1FC67F1E89829E00CABE1C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		CD2B1F871E897EF0006B835A = {
 			isa = PBXGroup;
 			children = (
 				CD2B1F921E897EF0006B835A /* PicFeed */,
 				CD2B1F911E897EF0006B835A /* Products */,
+				CD1FC6791E89803D00CABE1C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,12 +99,10 @@
 		CD2B1F921E897EF0006B835A /* PicFeed */ = {
 			isa = PBXGroup;
 			children = (
-				CD2B1F931E897EF0006B835A /* AppDelegate.swift */,
-				CD2B1F951E897EF0006B835A /* ViewController.swift */,
-				CD2B1F971E897EF0006B835A /* Main.storyboard */,
-				CD2B1F9A1E897EF0006B835A /* Assets.xcassets */,
-				CD2B1F9C1E897EF0006B835A /* LaunchScreen.storyboard */,
-				CD2B1F9F1E897EF0006B835A /* Info.plist */,
+				CD1FC67F1E89829E00CABE1C /* Model */,
+				CD1FC67D1E89823400CABE1C /* Controllers */,
+				CD1FC67E1E89825500CABE1C /* Views */,
+				CD1FC67C1E89820900CABE1C /* Supporting */,
 			);
 			path = PicFeed;
 			sourceTree = "<group>";
@@ -96,7 +139,16 @@
 				TargetAttributes = {
 					CD2B1F8F1E897EF0006B835A = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 6EJN6WTQBM;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -136,7 +188,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD2B1F961E897EF0006B835A /* ViewController.swift in Sources */,
 				CD2B1F941E897EF0006B835A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,6 +311,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PicFeed/PicFeed.entitlements;
+				DEVELOPMENT_TEAM = 6EJN6WTQBM;
 				INFOPLIST_FILE = PicFeed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.elyaniliranzocastro.PicFeed;
@@ -272,6 +325,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PicFeed/PicFeed.entitlements;
+				DEVELOPMENT_TEAM = 6EJN6WTQBM;
 				INFOPLIST_FILE = PicFeed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.elyaniliranzocastro.PicFeed;
@@ -299,6 +354,7 @@
 				CD2B1FA41E897EF0006B835A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

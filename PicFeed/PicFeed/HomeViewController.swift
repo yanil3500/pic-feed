@@ -33,13 +33,9 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         //Source type specifies the type of picker interface to be displayed by the controller
         
-        if self.doesHaveCamera(){
-            self.imagePicker.sourceType = sourceType
-            self.present(self.imagePicker, animated: true, completion: nil)
-            print("The device totally has a camera!")
-        } else {
-            print("Device does not have camera.")
-        }
+        self.imagePicker.sourceType = sourceType
+        self.present(self.imagePicker, animated: true, completion: nil)
+
         
         
     }
@@ -50,10 +46,19 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.dismiss(animated: true, completion: nil)
     }
     
+//    func getImageFromPhotoLibrary(photoDic: [String: Any]) -> UIImageView {
+//        guard let imageUrl = photoDic["UIImagePickerControllerOriginalImage"] as? String else { fatalError("Cannot get image url") }
+//        
+//        
+//    }
+    
     //tells the delegate that the user picked a still image or movie (see info dictionary)
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        print("Info: \(info)")
+        print("Info: \(info["UIImagePickerControllerOriginalImage"])")
+        self.imageView.image = info["UIImagePickerControllerOriginalImage"] as? UIImage
         
+        //Dismisses picker controller
+        imagePickerControllerDidCancel(picker)
     }
     @IBAction func imageTapped(_ sender: Any) {
         print("User has tapped image.")

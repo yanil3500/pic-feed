@@ -56,10 +56,15 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //tells the delegate that the user picked a still image or movie (see info dictionary)
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         print("Info: \(info["UIImagePickerControllerOriginalImage"])")
-        self.imageView.image = info["UIImagePickerControllerOriginalImage"] as? UIImage
+        //The edited image is assigned to the imageView
+        self.imageView.image = info["UIImagePickerControllerEditedImage"] as? UIImage
         if let capturedImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             //Saves captured image to photoAlbum
-//            UIImageWriteToSavedPhotosAlbum(capturedImage, self, nil, <#T##contextInfo: UnsafeMutableRawPointer?##UnsafeMutableRawPointer?#>)
+            UIImageWriteToSavedPhotosAlbum(capturedImage, self, nil, nil)
+            if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
+                //Saves the edited image to photo album
+                UIImageWriteToSavedPhotosAlbum(editedImage, self, nil, nil)
+            }
         }
 
         //Dismisses picker controller

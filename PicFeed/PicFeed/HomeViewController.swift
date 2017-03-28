@@ -102,7 +102,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBAction func filterButtonTapped(_ sender: Any) {
         //Checks to see if there is an image on
         guard let image = self.imageView.image else { return }
-        let alertController = UIAlertController(title: "Title", message: "Please selected a filter", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "PicFeed", message: "Please select a filter", preferredStyle: .alert)
         
         let blackAndWhiteAction = UIAlertAction(title: "Black & White", style: .default) { (action) in
             Filters.filter(name: .BlackAndWhite, image: image, completion: { (filteredImage) in
@@ -151,6 +151,10 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let resetAction = UIAlertAction(title: "Reset Image", style: .destructive) { (action) in
             self.imageView.image = Filters.originalImage
         }
+        let saveAction = UIAlertAction(title: "Save Image", style: .default) { (action) in
+            guard let imageOnView = self.imageView.image else { return }
+            UIImageWriteToSavedPhotosAlbum(imageOnView, self, nil, nil)
+        }
         let undoAction = UIAlertAction(title: "Undo Filter", style: .destructive) { (action) in
             if Filters.undoImageFilters.count > 0 {
                 if self.imageView.image == Filters.undoImageFilters.last {
@@ -171,6 +175,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         alertController.addAction(circularWrapAction)
         alertController.addAction(resetAction)
         alertController.addAction(undoAction)
+        alertController.addAction(saveAction)
         alertController.addAction(cancelAction)
         print("Number of filter photos: \(Filters.undoImageFilters.count)")
         self.present(alertController, animated: true, completion: nil)

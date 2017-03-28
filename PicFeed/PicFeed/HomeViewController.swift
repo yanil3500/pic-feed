@@ -150,6 +150,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         }
         let resetAction = UIAlertAction(title: "Reset Image", style: .destructive) { (action) in
             self.imageView.image = Filters.originalImage
+            Filters.undoImageFilters.removeAll()
         }
         let saveAction = UIAlertAction(title: "Save Image", style: .default) { (action) in
             guard let imageOnView = self.imageView.image else { return }

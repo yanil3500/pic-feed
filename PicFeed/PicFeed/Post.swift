@@ -33,6 +33,7 @@ extension Post {
     class func recordFor(post: Post) throws -> CKRecord? {
         
         //the first parameter is the image that is to be converted, the second parameter is the compression setting for the image
+        //UIImageJPEGRepresentation convert the UIImage to raw data, preparing the data for CKRecord 
         guard let data = UIImageJPEGRepresentation(post.image, 0.7) else {
             //If image to data conversion fail, throw PostError.WritingImageToData
             throw PostError.WritingImageToData

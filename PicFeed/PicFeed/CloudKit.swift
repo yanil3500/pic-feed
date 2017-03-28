@@ -40,7 +40,7 @@ class CloudKit {
                     
                     //If there is a record, it means a record was posted to iCloud
                     if let record = record {
-                        print(record)
+                        print("Inside of CloudKit.shared.save: \(record)")
                         completion(true)
                     } else {
                     //If there isn't a record and there isn't an error

@@ -10,7 +10,6 @@ import UIKit
 
 extension UIImage {
     
-    //This function will convert the data from iCloud to an image (when images are retrived from CloudKit)
     func resize(size: CGSize) -> UIImage? {
         //Creates a graphics context
         UIGraphicsBeginImageContext(size)

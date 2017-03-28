@@ -41,7 +41,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
     }
     
-    //every view controller has the capability to dimiss itself
+    //every view controller has the capability to dismiss itself
     //If user is presented with a cancel button, dismiss the image-picker
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
@@ -76,6 +76,45 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.presentActionSheet()
     }
     
+    @IBAction func postToPicFeed(_ sender: Any) {
+        if let image = self.imageView.image {
+            //Gets image from imageView
+            let newPost = Post(image: image)
+            
+            CloudKit.shared.save(post: newPost, completion: { (success) in
+                if success {
+                    print("Saved post successfully to CloudKit!")
+                } else {
+                    print("Post was not saved successfully to CloudKit...")
+                }
+            })
+        }
+        print("POST has been tapped.")
+    }
+    
+    @IBAction func filterButtonTapped(_ sender: Any) {
+        //Checks to see if there is an image on t
+        guard let image = self.imageView.image else { return }
+        let alertController = UIAlertController(title: "Title", message: "Please selected a filter", preferredStyle: .alert)
+        
+        let blackAndWhiteAction = UIAlertAction(title: "Black & White", style: .default) { (action) in
+            <#code#>
+        }
+        
+        let vintageAction = UIAlertAction(title: "Vintage", style: .default) { (action) in
+            <#code#>
+        }
+        let resetAction = UIAlertAction(title: "Reset Image", style: .destructive) { (action) in
+            <#code#>
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(blackAndWhiteAction)
+        alertController.addAction(vintageAction)
+        alertController.addAction(resetAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
 
     
     //the following function asks the user for permissions in regards to camera use and 

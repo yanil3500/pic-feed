@@ -76,10 +76,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.presentActionSheet()
     }
     
-    func doesHaveCamera() -> Bool {
-        return UIImagePickerController.isSourceTypeAvailable(.camera)
-    }
-    
 
     
     //the following function asks the user for permissions in regards to camera use and 
@@ -88,13 +84,15 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         /*
          An action sheet is a specific style of alert that appears in response to a control or action, and presents a set of two or more choices related to the current context. Use an action sheet to let people initiate tasks, or to request confirmation before performing a potentially destructive operation. */
         let actionSheetController = UIAlertController(title: "Source", message: "Please select source type", preferredStyle: .actionSheet)
-        
-        if doesHaveCamera() {
-          let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
             self.presentImagePickerWith(sourceType: .camera)
-          }
-            actionSheetController.addAction(cameraAction)
         }
+        
+        //If the application is launched on a device without a camera, the camera option is disabled but shown (grayed out); Indicating to the user that the camera option would be available if his or her device supported it.
+        if !UIImagePickerController.isSourceTypeAvailable(.camera) {
+            cameraAction.isEnabled = false
+        }
+            
         let photoAction = UIAlertAction(title: "Photo Library", style: .default) { (action) in
             self.presentImagePickerWith(sourceType: .photoLibrary)
         }
@@ -103,6 +101,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         //Attaches action object to the action sheet
         
+        actionSheetController.addAction(cameraAction)
         actionSheetController.addAction(photoAction)
         actionSheetController.addAction(cancelAction)
         

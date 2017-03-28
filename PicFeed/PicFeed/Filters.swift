@@ -25,6 +25,8 @@ class Filters {
     static var originalImage = UIImage()
     
     static var undoImageFilters = [UIImage]()
+    
+    
     class func filter(name: FilterName, image: UIImage, completion: @escaping FilterCompletion){
         OperationQueue().addOperation {
             

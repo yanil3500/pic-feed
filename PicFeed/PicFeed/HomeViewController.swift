@@ -43,7 +43,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         //The class needs to conform to UIImagePickerControllerDelegate
         self.imagePicker.delegate = self
         
-        self.imagePicker.allowsEditing = true
+
         
         //Source type specifies the type of picker interface to be displayed by the controller
         
@@ -63,13 +63,11 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //tells the delegate that the user picked a still image or movie (see info dictionary)
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         //The edited image is assigned to the imageView
-        
-        guard let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage else { return }
+
         guard let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
         
-        self.imageView.image = editedImage
+        self.imageView.image = originalImage
         
-        UIImageWriteToSavedPhotosAlbum(editedImage, self, nil, nil)
         UIImageWriteToSavedPhotosAlbum(originalImage, self, nil, nil)
         
         //Sets the originalImage property on Filters class
@@ -87,9 +85,9 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     @IBAction func postToPicFeed(_ sender: Any) {
         if let image = self.imageView.image {
+            UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
             //Gets image from imageView
             let newPost = Post(image: image)
-            
             CloudKit.shared.save(post: newPost, completion: { (success) in
                 if success {
                     print("Saved post successfully to CloudKit!")
@@ -112,7 +110,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 guard let filteredImageUnwrap = filteredImage else { return }
                 Filters.undoImageFilters.append(filteredImageUnwrap)
                 //Saves filtered image to device
-                UIImageWriteToSavedPhotosAlbum(filteredImageUnwrap, self, nil, nil)
                 self.imageView.image = filteredImageUnwrap
             })
         }
@@ -123,7 +120,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 guard let filteredImageUnwrap = filteredImage else { return }
                 Filters.undoImageFilters.append(filteredImageUnwrap)
                 //Saves filtered image to device
-                UIImageWriteToSavedPhotosAlbum(filteredImageUnwrap, self, nil, nil)
                 self.imageView.image = filteredImageUnwrap
             })
         }
@@ -132,7 +128,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             Filters.filter(name: .Posterize, image: image, completion: { (filteredImage) in
                 guard let filteredImageUnwrap = filteredImage else { return }
                 Filters.undoImageFilters.append(filteredImageUnwrap)
-                UIImageWriteToSavedPhotosAlbum(filteredImageUnwrap, self, nil, nil)
                 self.imageView.image = filteredImageUnwrap
             })
         }
@@ -150,10 +145,22 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 guard let filteredImageUnwrap = filteredImage else { return }
                 Filters.undoImageFilters.append(filteredImageUnwrap)
                 self.imageView.image = filteredImageUnwrap
+                Filters.undoImageFilters.removeLast()
             })
         }
         let resetAction = UIAlertAction(title: "Reset Image", style: .destructive) { (action) in
             self.imageView.image = Filters.originalImage
+        }
+        let undoAction = UIAlertAction(title: "Undo Filter", style: .destructive) { (action) in
+            if Filters.undoImageFilters.count > 0 {
+                if self.imageView.image == Filters.undoImageFilters.last {
+                    Filters.undoImageFilters.removeLast()
+                }
+                self.imageView.image = Filters.undoImageFilters.popLast()
+            } else {
+                self.imageView.image = Filters.originalImage
+            }
+            
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
@@ -163,7 +170,9 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         alertController.addAction(comicEffectAction)
         alertController.addAction(circularWrapAction)
         alertController.addAction(resetAction)
+        alertController.addAction(undoAction)
         alertController.addAction(cancelAction)
+        print("Number of filter photos: \(Filters.undoImageFilters.count)")
         self.present(alertController, animated: true, completion: nil)
     }
 

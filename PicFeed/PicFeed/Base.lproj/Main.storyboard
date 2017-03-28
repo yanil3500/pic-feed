@@ -24,14 +24,14 @@
                         <subviews>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7v1-uF-Ehn">
                                 <rect key="frame" x="46.5" y="83" width="282" height="501"/>
-                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="ob6-W0-aSD" appends="YES" id="ScJ-wG-GZN"/>
                                 </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EnR-Be-eSA">
-                                <rect key="frame" x="46" y="45" width="282" height="30"/>
+                                <rect key="frame" x="46" y="-147" width="282" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="POST">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -41,7 +41,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFb-Gy-9gQ">
-                                <rect key="frame" x="46" y="592" width="282" height="30"/>
+                                <rect key="frame" x="46" y="784" width="282" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="FILTER">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -53,20 +53,22 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="7v1-uF-Ehn" firstAttribute="top" secondItem="EnR-Be-eSA" secondAttribute="bottom" constant="8" id="1rj-zO-xf4"/>
+                            <constraint firstItem="7v1-uF-Ehn" firstAttribute="top" secondItem="EnR-Be-eSA" secondAttribute="bottom" constant="200" id="1rj-zO-xf4"/>
                             <constraint firstItem="EnR-Be-eSA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="33m-DB-lgZ"/>
                             <constraint firstItem="QFb-Gy-9gQ" firstAttribute="width" secondItem="7v1-uF-Ehn" secondAttribute="width" id="3VU-sd-LGd"/>
                             <constraint firstItem="7v1-uF-Ehn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4J2-0X-f8i"/>
                             <constraint firstItem="QFb-Gy-9gQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5Jr-4P-O8X"/>
                             <constraint firstItem="7v1-uF-Ehn" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.75" constant="1" id="FE8-tc-EGC"/>
-                            <constraint firstItem="QFb-Gy-9gQ" firstAttribute="top" secondItem="7v1-uF-Ehn" secondAttribute="bottom" constant="8" id="QNI-F1-ef4"/>
+                            <constraint firstItem="QFb-Gy-9gQ" firstAttribute="top" secondItem="7v1-uF-Ehn" secondAttribute="bottom" constant="200" id="QNI-F1-ef4"/>
                             <constraint firstItem="7v1-uF-Ehn" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="eAi-5y-o75"/>
                             <constraint firstItem="EnR-Be-eSA" firstAttribute="width" secondItem="7v1-uF-Ehn" secondAttribute="width" id="kci-A4-I8B"/>
                             <constraint firstItem="7v1-uF-Ehn" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.75" constant="1" id="pzn-Ya-Kny"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="filterButtonTopConstraint" destination="QNI-F1-ef4" id="303-d3-Lrc"/>
                         <outlet property="imageView" destination="7v1-uF-Ehn" id="wJ3-rB-gzh"/>
+                        <outlet property="postButtonBottomConstraint" destination="1rj-zO-xf4" id="IB5-pg-Bfo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

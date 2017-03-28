@@ -13,6 +13,9 @@ import CoreImage
 enum FilterName : String {
     case Vintage = "CIPhotoEffectTransfer"
     case BlackAndWhite = "CIPhotoEffectMono"
+    case Posterize = "CIColorPosterize"
+    case CircularWrap = "CICircularWrap"
+    case ComicEffect = "CIComicEffect"
 }
 
 typealias FilterCompletion = (UIImage?) -> ()
@@ -21,6 +24,7 @@ class Filters {
     //Hold reference to th original image
     static var originalImage = UIImage()
     
+    static var undoImageFilters = [UIImage]()
     class func filter(name: FilterName, image: UIImage, completion: @escaping FilterCompletion){
         OperationQueue().addOperation {
             

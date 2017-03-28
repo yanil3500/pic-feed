@@ -13,11 +13,24 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     let imagePicker = UIImagePickerController()
 
     @IBOutlet weak var imageView: UIImageView!
+    
+    
+    @IBOutlet weak var filterButtonTopConstraint: NSLayoutConstraint!
+    //DONE: Have at least 2 or more constraint-based animations in your UI. Choose whichever constraints you'd like, be creative.
+    @IBOutlet weak var postButtonBottomConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.imageView.image = #imageLiteral(resourceName: "Twitter_Logo_White_On_Image")
         // Do any additional setup after loading the view.
+        
+        postButtonBottomConstraint.constant = 8
+        filterButtonTopConstraint.constant = 8
+        UIView.animate(withDuration: 0.4) {
+            self.view.layoutIfNeeded()
+        }
+        
+        
     }
     
     
@@ -47,26 +60,22 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.dismiss(animated: true, completion: nil)
     }
     
-//    func getImageFromPhotoLibrary(photoDic: [String: Any]) -> UIImageView {
-//        guard let imageUrl = photoDic["UIImagePickerControllerOriginalImage"] as? String else { fatalError("Cannot get image url") }
-//        
-//        
-//    }
-    
     //tells the delegate that the user picked a still image or movie (see info dictionary)
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        print("Info: \(info[UIImagePickerControllerOriginalImage])")
         //The edited image is assigned to the imageView
-        self.imageView.image = info[UIImagePickerControllerEditedImage] as? UIImage
-        if let capturedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            //Saves captured image to photoAlbum
-            UIImageWriteToSavedPhotosAlbum(capturedImage, self, nil, nil)
-            if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
-                //Saves the edited image to photo album
-                UIImageWriteToSavedPhotosAlbum(editedImage, self, nil, nil)
-            }
-        }
-
+        
+        guard let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage else { return }
+        guard let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
+        
+        self.imageView.image = editedImage
+        
+        UIImageWriteToSavedPhotosAlbum(editedImage, self, nil, nil)
+        UIImageWriteToSavedPhotosAlbum(originalImage, self, nil, nil)
+        
+        //Sets the originalImage property on Filters class
+        
+        Filters.originalImage = originalImage
+        
         //Dismisses picker controller
         imagePickerControllerDidCancel(picker)
         
@@ -93,24 +102,66 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     @IBAction func filterButtonTapped(_ sender: Any) {
-        //Checks to see if there is an image on t
+        //Checks to see if there is an image on
         guard let image = self.imageView.image else { return }
         let alertController = UIAlertController(title: "Title", message: "Please selected a filter", preferredStyle: .alert)
         
         let blackAndWhiteAction = UIAlertAction(title: "Black & White", style: .default) { (action) in
-            <#code#>
+            Filters.filter(name: .BlackAndWhite, image: image, completion: { (filteredImage) in
+                //Adds filtered image to separate array for undo action
+                guard let filteredImageUnwrap = filteredImage else { return }
+                Filters.undoImageFilters.append(filteredImageUnwrap)
+                //Saves filtered image to device
+                UIImageWriteToSavedPhotosAlbum(filteredImageUnwrap, self, nil, nil)
+                self.imageView.image = filteredImageUnwrap
+            })
         }
         
         let vintageAction = UIAlertAction(title: "Vintage", style: .default) { (action) in
-            <#code#>
+            Filters.filter(name: .Vintage, image: image, completion: { (filteredImage) in
+                 //Adds filtered image to separate array for undo action
+                guard let filteredImageUnwrap = filteredImage else { return }
+                Filters.undoImageFilters.append(filteredImageUnwrap)
+                //Saves filtered image to device
+                UIImageWriteToSavedPhotosAlbum(filteredImageUnwrap, self, nil, nil)
+                self.imageView.image = filteredImageUnwrap
+            })
+        }
+        
+        let posterizeAction = UIAlertAction(title: "Posterize", style: .default) { (action) in
+            Filters.filter(name: .Posterize, image: image, completion: { (filteredImage) in
+                guard let filteredImageUnwrap = filteredImage else { return }
+                Filters.undoImageFilters.append(filteredImageUnwrap)
+                UIImageWriteToSavedPhotosAlbum(filteredImageUnwrap, self, nil, nil)
+                self.imageView.image = filteredImageUnwrap
+            })
+        }
+        
+        let circularWrapAction = UIAlertAction(title: "Circular Wrap", style: .default) { (alert) in
+            Filters.filter(name: .CircularWrap, image: image, completion: { (filteredImage) in
+                guard let filteredImageUnwrap = filteredImage else { return }
+                Filters.undoImageFilters.append(filteredImageUnwrap)
+                self.imageView.image = filteredImageUnwrap
+            })
+        }
+        
+        let comicEffectAction = UIAlertAction(title: "Comic Effect", style: .default) { (action) in
+            Filters.filter(name: .ComicEffect, image: image, completion: { (filteredImage) in
+                guard let filteredImageUnwrap = filteredImage else { return }
+                Filters.undoImageFilters.append(filteredImageUnwrap)
+                self.imageView.image = filteredImageUnwrap
+            })
         }
         let resetAction = UIAlertAction(title: "Reset Image", style: .destructive) { (action) in
-            <#code#>
+            self.imageView.image = Filters.originalImage
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addAction(blackAndWhiteAction)
         alertController.addAction(vintageAction)
+        alertController.addAction(posterizeAction)
+        alertController.addAction(comicEffectAction)
+        alertController.addAction(circularWrapAction)
         alertController.addAction(resetAction)
         alertController.addAction(cancelAction)
         self.present(alertController, animated: true, completion: nil)

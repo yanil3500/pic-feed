@@ -56,6 +56,5 @@ extension Post {
             throw PostError.writingDataToDisk
         }
         
-        return nil
     }
 }

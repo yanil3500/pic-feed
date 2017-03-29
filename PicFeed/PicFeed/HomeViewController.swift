@@ -101,8 +101,28 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     @IBAction func filterButtonTapped(_ sender: Any) {
         //Checks to see if there is an image on
+        
+ 
         guard let image = self.imageView.image else { return }
         let alertController = UIAlertController(title: "PicFeed", message: "Please select a filter", preferredStyle: .alert)
+        
+        func alertActionGenerator(enumCase: FilterName?,  title: String) ->
+            UIAlertAction {
+                guard let enumUnwrapped = enumCase else { fatalError("Could not unwrap") }
+                if enumCase != nil {
+                let filterAction = UIAlertAction(title: title, style: .default) { (alert) in
+                Filters.filter(name: enumUnwrapped, image: image, completion: { (filteredImage) in
+                    guard let filteredImageUnwrapped = filteredImage else { return }
+                    //Adds filtered image to separate array for undo action
+                    Filters.undoImageFilters.append(filteredImageUnwrapped)
+                    //Update image view
+                    self.imageView.image = filteredImageUnwrapped
+                })
+            }
+                }
+            
+            return filterAction
+        }
         
         let blackAndWhiteAction = UIAlertAction(title: "Black & White", style: .default) { (action) in
             Filters.filter(name: .BlackAndWhite, image: image, completion: { (filteredImage) in

@@ -11,4 +11,16 @@ import UIKit
 class GalleryViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
+    
+    var post: Post! {
+        didSet {
+            self.imageView.image = post.image
+        }
+    }
+    
+    override func prepareForReuse() {
+        self.imageView.image = nil 
+    }
+    
+    
 }

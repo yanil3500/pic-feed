@@ -145,12 +145,12 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 guard let filteredImageUnwrap = filteredImage else { return }
                 Filters.undoImageFilters.append(filteredImageUnwrap)
                 self.imageView.image = filteredImageUnwrap
-                Filters.undoImageFilters.removeLast()
             })
         }
         let resetAction = UIAlertAction(title: "Reset Image", style: .destructive) { (action) in
             self.imageView.image = Filters.originalImage
             Filters.undoImageFilters.removeAll()
+            print("Number of filtered photos (after reset): \(Filters.undoImageFilters.count)")
         }
         let saveAction = UIAlertAction(title: "Save Image", style: .default) { (action) in
             guard let imageOnView = self.imageView.image else { return }

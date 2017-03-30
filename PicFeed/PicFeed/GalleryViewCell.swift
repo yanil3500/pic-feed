@@ -10,11 +10,15 @@ import UIKit
 
 class GalleryViewCell: UICollectionViewCell {
     
+   
     @IBOutlet weak var imageView: UIImageView!
     
+    @IBOutlet weak var dateCreated: UILabel!
+    var datePosted: String = ""
     var post: Post! {
         didSet {
             self.imageView.image = post.image
+            self.datePosted = Post.getDate(dateTo: post.dateCreated!)
         }
     }
     
@@ -23,7 +27,8 @@ class GalleryViewCell: UICollectionViewCell {
         
         super.prepareForReuse()
         
-        self.imageView.image = nil 
+        self.imageView.image = nil
+        self.datePosted = ""
     }
     
     

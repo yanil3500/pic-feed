@@ -63,7 +63,7 @@ class CloudKit {
         
         let postQuery = CKQuery(recordType: "Post", predicate: NSPredicate(value: true))
         
-        
+        print("Inside of getPosts: ")
         self.privateDB.perform(postQuery, inZoneWith: nil) { (records, error) in
             
             if let error = error {
@@ -82,11 +82,18 @@ class CloudKit {
                 
                 let path = asset.fileURL.path
                 
-                guard let image = UIImage(contentsOfFile: path) else { fatalError("Failed to get image") }
+                guard let dateCreated = record.creationDate else { fatalError("Failed to get date.") }
+
+                
+                guard let image = UIImage(contentsOfFile: path) else { fatalError("Failed to get image.") }
                 
                 let newPost = Post(image: image)
                 
+                newPost.dateCreated = dateCreated
+                
                 posts.append(newPost)
+                
+                print("Inside of getPosts: \(newPost)")
             }
             
             OperationQueue.main.addOperation {

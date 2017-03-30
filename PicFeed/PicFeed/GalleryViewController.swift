@@ -22,6 +22,20 @@ class GalleryViewController: UIViewController {
         super.viewDidLoad()
         
         self.galleryViewController.dataSource = self
+        self.galleryViewController.collectionViewLayout = GalleryCollectionViewLayoutController(columns: 2)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        update()
+    }
+    
+    func update(){
+        CloudKit.shared.getPosts { (posts) in
+            guard let posts = posts else { fatalError("Failed to get posts.") }
+            self.allPosts = posts
+        }
     }
 }
 
@@ -31,6 +45,13 @@ extension GalleryViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GalleryViewCell.identifier, for: indexPath) as! GalleryViewCell
         
         cell.post = self.allPosts[indexPath.row]
+        
+        var title = UILabel(frame: CGRect(x: 0, y: 0, width: cell.bounds.size.width, height: 40))
+        
+        title.backgroundColor = UIColor.white
+        title.text = "Posted: \(cell.datePosted)"
+        title.numberOfLines = 0
+        cell.contentView.addSubview(title)
         
         return cell
     }

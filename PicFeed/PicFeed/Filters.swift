@@ -22,6 +22,10 @@ enum FilterName : String {
 typealias FilterCompletion = (UIImage?) -> ()
 
 class Filters {
+    
+    static let shared = Filters()
+    
+    private init () {}
     //Hold reference to th original image
     static var originalImage = UIImage()
     

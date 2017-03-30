@@ -18,7 +18,11 @@ class GalleryViewCell: UICollectionViewCell {
         }
     }
     
+    //Accounts for bugs in reusing cells (Ex: Retrieving images asynchronously; reuse the cell without clear, resulting in the new image beign stack on top of the old image)
     override func prepareForReuse() {
+        
+        super.prepareForReuse()
+        
         self.imageView.image = nil 
     }
     

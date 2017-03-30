@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7v1-uF-Ehn">
-                                <rect key="frame" x="46.5" y="83" width="282" height="501"/>
+                                <rect key="frame" x="47" y="83" width="282" height="501"/>
                                 <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -79,7 +79,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1191" y="-224"/>
+            <point key="canvasLocation" x="1189.5999999999999" y="-224.4377811094453"/>
         </scene>
         <!--Gallery-->
         <scene sceneID="3yk-dd-88T">

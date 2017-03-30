@@ -14,6 +14,9 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 
     @IBOutlet weak var imageView: UIImageView!
     
+    let animationDuration = 0.4
+    
+    let constraints = 8
     
     @IBOutlet weak var filterButtonTopConstraint: NSLayoutConstraint!
     //DONE: Have at least 2 or more constraint-based animations in your UI. Choose whichever constraints you'd like, be creative.
@@ -24,34 +27,24 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.imageView.image = #imageLiteral(resourceName: "Twitter_Logo_White_On_Image")
         // Do any additional setup after loading the view.
         
-        postButtonBottomConstraint.constant = 8
-        filterButtonTopConstraint.constant = 8
-        UIView.animate(withDuration: 0.4) {
+        postButtonBottomConstraint.constant = CGFloat(constraints)
+        filterButtonTopConstraint.constant = CGFloat(constraints)
+        UIView.animate(withDuration: animationDuration) {
             self.view.layoutIfNeeded()
         }
         
         
     }
     
-    
-    
-    
-    
     //Helper method that presents our image picker
     func presentImagePickerWith(sourceType: UIImagePickerControllerSourceType){
         
         //The class needs to conform to UIImagePickerControllerDelegate
         self.imagePicker.delegate = self
-        
-
-        
         //Source type specifies the type of picker interface to be displayed by the controller
         
         self.imagePicker.sourceType = sourceType
         self.present(self.imagePicker, animated: true, completion: nil)
-
-        
-        
     }
     
     //every view controller has the capability to dismiss itself
@@ -68,7 +61,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         self.imageView.image = originalImage
         
-        UIImageWriteToSavedPhotosAlbum(originalImage, self, nil, nil)
         
         //Sets the originalImage property on Filters class
         
@@ -99,63 +91,22 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         print("POST has been tapped.")
     }
     
-    @IBAction func filterButtonTapped(_ sender: Any) {
-        //Checks to see if there is an image on
-        guard let image = self.imageView.image else { return }
-        let alertController = UIAlertController(title: "PicFeed", message: "Please select a filter", preferredStyle: .alert)
-        
-        let blackAndWhiteAction = UIAlertAction(title: "Black & White", style: .default) { (action) in
-            Filters.filter(name: .BlackAndWhite, image: image, completion: { (filteredImage) in
+    func filterAlertGenerator(enumCase: FilterName, title: String)-> UIAlertAction {
+        guard let image = self.imageView.image else { fatalError("Could not get image.") }
+        let filterAction = UIAlertAction(title: title, style: .default) { (action) in
+            Filters.filter(name: enumCase, image: image, completion: { (filteredImage) in
+                guard let filteredImageUnwrapped = filteredImage else { fatalError("Image failed to safely unwrap.") }
                 //Adds filtered image to separate array for undo action
-                guard let filteredImageUnwrap = filteredImage else { return }
-                Filters.undoImageFilters.append(filteredImageUnwrap)
-                //Saves filtered image to device
-                self.imageView.image = filteredImageUnwrap
+                Filters.undoImageFilters.append(filteredImageUnwrapped)
+                //Update image view
+                self.imageView.image = filteredImageUnwrapped
             })
         }
         
-        let vintageAction = UIAlertAction(title: "Vintage", style: .default) { (action) in
-            Filters.filter(name: .Vintage, image: image, completion: { (filteredImage) in
-                 //Adds filtered image to separate array for undo action
-                guard let filteredImageUnwrap = filteredImage else { return }
-                Filters.undoImageFilters.append(filteredImageUnwrap)
-                //Saves filtered image to device
-                self.imageView.image = filteredImageUnwrap
-            })
-        }
-        
-        let posterizeAction = UIAlertAction(title: "Posterize", style: .default) { (action) in
-            Filters.filter(name: .Posterize, image: image, completion: { (filteredImage) in
-                guard let filteredImageUnwrap = filteredImage else { return }
-                Filters.undoImageFilters.append(filteredImageUnwrap)
-                self.imageView.image = filteredImageUnwrap
-            })
-        }
-        
-        let circularWrapAction = UIAlertAction(title: "Circular Wrap", style: .default) { (alert) in
-            Filters.filter(name: .CircularWrap, image: image, completion: { (filteredImage) in
-                guard let filteredImageUnwrap = filteredImage else { return }
-                Filters.undoImageFilters.append(filteredImageUnwrap)
-                self.imageView.image = filteredImageUnwrap
-            })
-        }
-        
-        let comicEffectAction = UIAlertAction(title: "Comic Effect", style: .default) { (action) in
-            Filters.filter(name: .ComicEffect, image: image, completion: { (filteredImage) in
-                guard let filteredImageUnwrap = filteredImage else { return }
-                Filters.undoImageFilters.append(filteredImageUnwrap)
-                self.imageView.image = filteredImageUnwrap
-                Filters.undoImageFilters.removeLast()
-            })
-        }
-        let resetAction = UIAlertAction(title: "Reset Image", style: .destructive) { (action) in
-            self.imageView.image = Filters.originalImage
-            Filters.undoImageFilters.removeAll()
-        }
-        let saveAction = UIAlertAction(title: "Save Image", style: .default) { (action) in
-            guard let imageOnView = self.imageView.image else { return }
-            UIImageWriteToSavedPhotosAlbum(imageOnView, self, nil, nil)
-        }
+        return filterAction
+    }
+    
+    func undoAction() -> UIAlertAction {
         let undoAction = UIAlertAction(title: "Undo Filter", style: .destructive) { (action) in
             if Filters.undoImageFilters.count > 0 {
                 if self.imageView.image == Filters.undoImageFilters.last {
@@ -165,21 +116,41 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             } else {
                 self.imageView.image = Filters.originalImage
             }
-            
         }
+        return undoAction
+    }
+    
+    
+    @IBAction func filterButtonTapped(_ sender: Any) {
+
+        let alertController = UIAlertController(title: "PicFeed", message: "Please select a filter", preferredStyle: .alert)
+        
+        Filters.filterNames.map { (key: FilterName, title: String) -> UIAlertAction in
+            filterAlertGenerator(enumCase: key, title: title)
+        }.forEach { (filterAction) in
+            alertController.addAction(filterAction)
+        }
+        
+        
+        let resetAction = UIAlertAction(title: "Reset Image", style: .destructive) { (action) in
+            self.imageView.image = Filters.originalImage
+            Filters.undoImageFilters.removeAll()
+            print("Number of filtered photos (after reset): \(Filters.undoImageFilters.count)")
+        }
+        let saveAction = UIAlertAction(title: "Save Image", style: .default) { (action) in
+            guard let imageOnView = self.imageView.image else { return }
+            UIImageWriteToSavedPhotosAlbum(imageOnView, self, nil, nil)
+        }
+  
+
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        alertController.addAction(blackAndWhiteAction)
-        alertController.addAction(vintageAction)
-        alertController.addAction(posterizeAction)
-        alertController.addAction(comicEffectAction)
-        alertController.addAction(circularWrapAction)
+        alertController.addAction(undoAction())
         alertController.addAction(resetAction)
-        alertController.addAction(undoAction)
         alertController.addAction(saveAction)
         alertController.addAction(cancelAction)
-        print("Number of filter photos: \(Filters.undoImageFilters.count)")
         self.present(alertController, animated: true, completion: nil)
+      
     }
 
     

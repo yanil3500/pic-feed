@@ -7,10 +7,14 @@
 //
 
 import CloudKit
-import Foundation
+import UIKit
 
 
-typealias PostCompletion = (Bool) -> ()
+typealias SuccessCompletion = (Bool) -> ()
+
+//fetches an array of posts from iCloud
+typealias PostsCompletion = ([Post]?) -> ()
+
 class CloudKit {
 
     
@@ -25,7 +29,7 @@ class CloudKit {
         return self.container.privateCloudDatabase
     }
     
-    func save(post: Post, completion: @escaping PostCompletion){
+    func save(post: Post, completion: @escaping SuccessCompletion){
         do {
             if let record = try Post.recordFor(post: post) {
                 
@@ -52,4 +56,58 @@ class CloudKit {
             print(error)
         }
     }
+    
+    func getPosts(completion: @escaping PostsCompletion){
+        /*In CloudKit, there is CKQuery object. Before querying CloudKit,
+         an instance of CKQuery has to be created so that it can do the query for us*/
+        
+        let postQuery = CKQuery(recordType: "Post", predicate: NSPredicate(value: true))
+        
+        print("Inside of getPosts: ")
+        self.privateDB.perform(postQuery, inZoneWith: nil) { (records, error) in
+            
+            if let error = error {
+                OperationQueue.main.addOperation {
+                    completion(nil)
+                }
+            }
+            
+            guard let records = records else { fatalError("Failed to get records.") }
+            
+            var posts = [Post]()
+                
+            for record in records {
+                
+                guard let asset = record["image"] as? CKAsset else { fatalError("Failed to get asset.") }
+                
+                let path = asset.fileURL.path
+                
+                guard let dateCreated = record.creationDate else { fatalError("Failed to get date.") }
+
+                
+                guard let image = UIImage(contentsOfFile: path) else { fatalError("Failed to get image.") }
+                
+                let newPost = Post(image: image)
+                
+                newPost.dateCreated = dateCreated
+                
+                posts.append(newPost)
+                
+                print("Inside of getPosts: \(newPost)")
+            }
+            
+            OperationQueue.main.addOperation {
+                completion(posts)
+            }
+        }
+    }
+        
+        
+        
+        
+        
+        
+        
+        
 }
+

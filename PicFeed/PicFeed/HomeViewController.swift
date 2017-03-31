@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
     
     let animationDuration = 0.4
 
-    let constraints = 100
+    let constraints = 150
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,38 +112,16 @@ class HomeViewController: UIViewController {
         return undoAction
     }
 
+    @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
     @IBAction func filterButtonTapped(_ sender: Any) {
-//        Selecting a filtered image applies that filter to the current Image in the primary image view.
+
         print("filter button tapped")
-//        let alertController = UIAlertController(title: "PicFeed", message: "Please select a filter", preferredStyle: .alert)
         
-        
+        self.collectionViewHeightConstraint.constant = CGFloat(constraints)
         UIView.animate(withDuration: 0.5) { 
             self.view.layoutIfNeeded()
         }
-//        Filters.filterNames.map { (key: FilterName, title: String) -> UIAlertAction in
-//            filterAlertGenerator(enumCase: key, title: title)
-//        }.forEach { (filterAction) in
-//            alertController.addAction(filterAction)
-//        }
-//
-//        let resetAction = UIAlertAction(title: "Reset Image", style: .destructive) { (_) in
-//            self.imageView.image = Filters.originalImage
-//            Filters.undoImageFilters.removeAll()
-//            print("Number of filtered photos (after reset): \(Filters.undoImageFilters.count)")
-//        }
-//        let saveAction = UIAlertAction(title: "Save Image", style: .default) { (_) in
-//            guard let imageOnView = self.imageView.image else { return }
-//            UIImageWriteToSavedPhotosAlbum(imageOnView, self, nil, nil)
-//        }
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//
-//        alertController.addAction(undoAction())
-//        alertController.addAction(resetAction)
-//        alertController.addAction(saveAction)
-//        alertController.addAction(cancelAction)
-//        self.present(alertController, animated: true, completion: nil)
+
 
     }
 

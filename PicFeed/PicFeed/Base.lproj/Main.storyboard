@@ -33,9 +33,12 @@
                                 </connections>
                             </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="am5-M1-47f">
-                                <rect key="frame" x="0.0" y="414.5" width="375" height="146.5"/>
+                                <rect key="frame" x="0.0" y="414.5" width="375" height="0.0"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="eSm-nT-XyO"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WKf-6J-mgo">
                                     <size key="itemSize" width="127" height="152"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -44,10 +47,8 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterCell" id="cxj-3N-jnu" customClass="FilterCell" customModule="PicFeed" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="-3" width="127" height="152"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="127" height="152"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kMN-nX-uNz">
@@ -117,7 +118,6 @@
                             <constraint firstItem="EnR-Be-eSA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="DIp-jM-239"/>
                             <constraint firstItem="7v1-uF-Ehn" firstAttribute="top" secondItem="EnR-Be-eSA" secondAttribute="bottom" constant="8" id="Kcz-73-q05"/>
                             <constraint firstItem="QFb-Gy-9gQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Tnr-LX-P5H"/>
-                            <constraint firstItem="am5-M1-47f" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.22" id="Xrz-ep-UAy"/>
                             <constraint firstItem="7v1-uF-Ehn" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.95" id="h9b-rJ-soD"/>
                             <constraint firstItem="7v1-uF-Ehn" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="jEI-N3-2DD"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="QFb-Gy-9gQ" secondAttribute="bottom" id="wdb-vN-a0S"/>
@@ -126,6 +126,7 @@
                     <tabBarItem key="tabBarItem" title="Post" image="Post Office_000000_32" selectedImage="Post Office_000000_32" id="6qW-q6-j2t"/>
                     <connections>
                         <outlet property="collectionView" destination="am5-M1-47f" id="lsQ-U6-QjF"/>
+                        <outlet property="collectionViewHeightConstraint" destination="eSm-nT-XyO" id="dyV-27-VWS"/>
                         <outlet property="imageView" destination="7v1-uF-Ehn" id="wJ3-rB-gzh"/>
                     </connections>
                 </viewController>

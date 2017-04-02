@@ -16,7 +16,10 @@ class GalleryViewController: UIViewController {
     
     weak var delegate : GalleryViewControllerDelegate?
     
-
+    
+    @IBOutlet weak var postMessage: UILabel!
+    
+    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var galleryViewController: UICollectionView!
 
@@ -28,7 +31,8 @@ class GalleryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.postMessage.text = "The gallery is empty. Take some photos and post them."
+        self.postMessage.isHidden = true
         self.galleryViewController.delegate = self
         self.galleryViewController.dataSource = self
         self.galleryViewController.collectionViewLayout = GalleryCollectionViewLayoutController(columns: 2)
@@ -43,7 +47,11 @@ class GalleryViewController: UIViewController {
     func update() {
         self.activityIndicator.startAnimating()
         CloudKit.shared.getPosts { (posts) in
-            guard let posts = posts else { fatalError("Failed to get posts.") }
+            guard let posts = posts else {
+                self.activityIndicator.stopAnimating()
+                self.postMessage.isHidden = false 
+                return
+            }
             self.activityIndicator.stopAnimating()
             self.allPosts = posts
         }

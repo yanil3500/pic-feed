@@ -17,11 +17,15 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     
     let animationDuration = 0.4
-
-    let constraints = 150
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionViewHeight.constant = 0
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -117,7 +121,7 @@ class HomeViewController: UIViewController {
 
         print("filter button tapped")
         
-        self.collectionViewHeightConstraint.constant = CGFloat(constraints)
+        collectionViewHeight.constant = 150
         UIView.animate(withDuration: 0.5) { 
             self.view.layoutIfNeeded()
         }

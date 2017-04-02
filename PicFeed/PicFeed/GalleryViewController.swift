@@ -17,6 +17,7 @@ class GalleryViewController: UIViewController {
     weak var delegate : GalleryViewControllerDelegate?
     
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var galleryViewController: UICollectionView!
 
     var allPosts = [Post]() {
@@ -40,8 +41,10 @@ class GalleryViewController: UIViewController {
     }
 
     func update() {
+        self.activityIndicator.startAnimating()
         CloudKit.shared.getPosts { (posts) in
             guard let posts = posts else { fatalError("Failed to get posts.") }
+            self.activityIndicator.stopAnimating()
             self.allPosts = posts
         }
     }

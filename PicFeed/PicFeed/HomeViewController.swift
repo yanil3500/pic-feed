@@ -73,22 +73,6 @@ class HomeViewController: UIViewController {
         }
         print("POST has been tapped.")
     }
-
-    func filterAlertGenerator(enumCase: FilterName, title: String) -> UIAlertAction {
-        guard let image = self.imageView.image else { fatalError("Could not get image.") }
-        let filterAction = UIAlertAction(title: title, style: .default) { (_) in
-            Filters.shared.filter(name: enumCase, image: image, completion: { (filteredImage) in
-                guard let filteredImageUnwrapped = filteredImage else { fatalError("Image failed to safely unwrap.") }
-                //Adds filtered image to separate array for undo action
-                Filters.undoImageFilters.append(filteredImageUnwrapped)
-                //Update image view
-                self.imageView.image = filteredImageUnwrapped
-            })
-        }
-
-        return filterAction
-    }
-    
     
     @IBAction func userLongPressed(_ sender: UILongPressGestureRecognizer) {
         
@@ -117,9 +101,11 @@ class HomeViewController: UIViewController {
     }
 
     @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
+
     @IBAction func filterButtonTapped(_ sender: Any) {
 
         print("filter button tapped")
+        
         
         collectionViewHeight.constant = 150
         UIView.animate(withDuration: 0.5) { 
@@ -215,9 +201,13 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
 
 extension HomeViewController: GalleryViewControllerDelegate {
     func galleryController(didSelect image: UIImage) {
+        
+        Filters.originalImage = image 
         self.imageView.image = image
         
         self.tabBarController?.selectedIndex = 0
+        
+        
     }
 }
 

@@ -83,15 +83,19 @@ class CloudKit {
                 guard let dateCreated = record.creationDate else { fatalError("Failed to get date.") }
 
                 guard let image = UIImage(contentsOfFile: path) else { fatalError("Failed to get image.") }
-
+                print("Inside of getPosts: \(image)")
                 let newPost = Post(image: image)
 
                 newPost.dateCreated = dateCreated
 
                 posts.append(newPost)
-
+                
+                print("Inside of getPosts: Number of posts in collection \(posts.count)")
+                
                 print("Inside of getPosts: \(newPost)")
             }
+            
+            
 
             OperationQueue.main.addOperation {
                 completion(posts)

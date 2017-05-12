@@ -16,16 +16,22 @@ enum FilterName : String {
     case Posterize = "CIColorPosterize"
     case CircularWrap = "CICircularWrap"
     case ComicEffect = "CIComicEffect"
+    
 }
 
 typealias FilterCompletion = (UIImage?) -> ()
 
 class Filters {
+    
+    static let shared = Filters()
+    
+    private init () {}
     //Hold reference to th original image
     static var originalImage = UIImage()
     
     static var undoImageFilters = [UIImage]()
     
+    static var filterNames = [FilterName.Vintage : "Vintage" , FilterName.BlackAndWhite : "Black & White", FilterName.Posterize : "Posterize", FilterName.CircularWrap : "Circular Wrap", FilterName.ComicEffect : "Comic Effect"]
     
     class func filter(name: FilterName, image: UIImage, completion: @escaping FilterCompletion){
         OperationQueue().addOperation {

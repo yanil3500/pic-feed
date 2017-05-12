@@ -16,6 +16,8 @@ import CloudKit
 class Post {
     let image : UIImage
     
+    var dateCreated : Date?=nil
+    
     init(image: UIImage) {
         self.image = image
     }
@@ -57,4 +59,21 @@ extension Post {
         }
         
     }
+    
+    class func getDate(dateTo: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd, yyyy hh:mm:ss"
+        
+        return dateFormatter.string(from: dateTo )
+    }
 }
+
+
+
+
+
+
+
+
+
+

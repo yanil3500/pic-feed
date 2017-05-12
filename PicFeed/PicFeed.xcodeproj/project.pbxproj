@@ -14,6 +14,9 @@
 		CD2B1F991E897EF0006B835A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD2B1F971E897EF0006B835A /* Main.storyboard */; };
 		CD2B1F9B1E897EF0006B835A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD2B1F9A1E897EF0006B835A /* Assets.xcassets */; };
 		CD2B1F9E1E897EF0006B835A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD2B1F9C1E897EF0006B835A /* LaunchScreen.storyboard */; };
+		CDF6899D1E8AD0E10077412B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF6899C1E8AD0E10077412B /* Post.swift */; };
+		CDF6899F1E8AD37F0077412B /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF6899E1E8AD37F0077412B /* UIExtensions.swift */; };
+		CDF689A11E8AE7190077412B /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF689A01E8AE7190077412B /* Filters.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +30,9 @@
 		CD2B1F9D1E897EF0006B835A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CD2B1F9F1E897EF0006B835A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD2B1FA51E897F99006B835A /* PicFeed.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PicFeed.entitlements; sourceTree = "<group>"; };
+		CDF6899C1E8AD0E10077412B /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		CDF6899E1E8AD37F0077412B /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
+		CDF689A01E8AE7190077412B /* Filters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,9 @@
 		CD1FC67F1E89829E00CABE1C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CDF689A01E8AE7190077412B /* Filters.swift */,
+				CDF6899C1E8AD0E10077412B /* Post.swift */,
+				CDF6899E1E8AD37F0077412B /* UIExtensions.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -197,6 +206,9 @@
 				CD1FC6811E8984DB00CABE1C /* CloudKit.swift in Sources */,
 				CD2B1F941E897EF0006B835A /* AppDelegate.swift in Sources */,
 				CD1FC6831E898D2900CABE1C /* HomeViewController.swift in Sources */,
+				CDF689A11E8AE7190077412B /* Filters.swift in Sources */,
+				CDF6899F1E8AD37F0077412B /* UIExtensions.swift in Sources */,
+				CDF6899D1E8AD0E10077412B /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
